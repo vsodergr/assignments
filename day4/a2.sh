@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -d assignments ]; then
+if [[ ! -d assignments ]]; then
   echo "Cloning repo..."
   git clone https://github.com/vsodergr/assignments.git
 else
