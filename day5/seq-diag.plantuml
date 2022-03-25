@@ -1,0 +1,38 @@
+@startuml ATM Sequence Diagram
+actor User
+User -> ATM: Insert card
+activate ATM
+ATM -> User: Prompt for PIN
+User -> ATM: Enter PIN
+ATM -> Bank: Verify PIN
+activate Bank
+alt #LightGreen Verification success
+  Bank --> ATM: Verification OK
+  ATM -> User: Prompt for ammount
+  User -> ATM: Enter ammount
+  ATM -> Bank: Check funds
+  alt #LightGreen Sufficient funds
+    Bank --> ATM: Withdrawal approved
+    ATM -> User: Eject card
+    ATM -> User: Dispens money
+  else #Salmon Insufficient funds
+    Bank --> ATM: Withdrawal denied
+    ATM --> User: Eject card
+  end
+else #Salmon Verification failed
+  Bank --> ATM: Verification NOK
+  loop #LightSalmon max 2 more times
+    ATM -> User: Prompt for PIN
+    User -> ATM: Enter PIN
+    note right : See "Verification success"\nabove if succesful attemp.
+    ATM -> Bank: Verify PIN
+  end
+  alt #Salmon Three failed PIN entries
+    Bank --> ATM: Unauthorized user
+    deactivate Bank
+    ATM -> ATM: Eat card "Yum!"
+    ATM --> User: "I ate your card. Ha ha!"
+    deactivate ATM
+  end
+end
+@enduml

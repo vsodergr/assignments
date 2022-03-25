@@ -1,0 +1,14 @@
+@startuml ATM Action Diagram
+start
+:Insert card;
+repeat :Enter PIN;
+repeat while (Check PIN) is (NOK) not (OK)
+:Enter ammount;
+if (Sufficient funds?) then (Yes)
+  :Dispence money;
+else (No)
+  :Denied;
+endif
+:Eject card;
+stop
+@enduml
