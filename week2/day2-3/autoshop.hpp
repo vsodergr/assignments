@@ -3,8 +3,15 @@
 #include <string>
 #include <vector>
 
+// Constant exit command to compare
+const std::string kExit{"exit"};
+
+// Input helpers for strings and ints
 void GetInput(std::string &str);
 void GetInput(int &i);
+
+// Printing the entire customer record
+void PrintCustomerRecord();
 
 class Part {
  public:
@@ -33,6 +40,7 @@ class Vehicle {
  public:
   Vehicle(std::string in_make);
   void add_service();
+  std::string get_make();
 
  private:
   std::string make{};
@@ -53,8 +61,11 @@ class Customer {
   Customer(std::string in_name);
   void add_vehicle();
   void add_service(size_t vehicle_idx);
+  std::string get_name();
+  std::vector<Vehicle> get_vehicle_list();
 
  private:
   std::string name{};
   std::vector<Vehicle> vehicle_list{};
+  std::vector<Payment> payment_record{};
 };

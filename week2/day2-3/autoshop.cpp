@@ -1,7 +1,17 @@
 #include "autoshop.hpp"
 
-void GetInput(std::string &s) { std::getline(std::cin, s, '\n'); }
+void GetInput(std::string &s) {
+  std::cin >> std::ws;
+  s = "";
+  std::getline(std::cin, s, '\n');
+}
+
 void GetInput(int &i) { std::cin >> i; }
+
+void PrintCustomerRecord() {
+  std::cout << "Auto Shop Customer Record\n"
+            << "\tRECORD PLACEHOLDER\n";
+}
 
 Part::Part(std::string in_type, int in_cost) {
   this->type = in_type;
@@ -46,16 +56,16 @@ Vehicle::Vehicle(std::string in_make) { this->make = in_make; }
 void Vehicle::add_service() {
   Service new_service{};
 
-  std::string parts_changed{};
+  std::string parts_changed{"no"};
   std::cout << "Did you change any parts (yes/no)? ";
   GetInput(parts_changed);
 
-  while (parts_changed.compare("no")) {
-    // if (parts_changed.compare("yes")) {
-    //   std::cout << "Please enter \"yes\" or \"no\": ";
-    //   GetInput(parts_changed);
-    //   continue;
-    // }
+  while (0 != parts_changed.compare("no")) {
+    if (parts_changed.compare("yes")) {
+      std::cout << "Please enter \"yes\" or \"no\": ";
+      GetInput(parts_changed);
+      continue;
+    }
 
     new_service.add_part();
 
@@ -65,6 +75,8 @@ void Vehicle::add_service() {
 
   this->service_list.push_back(new_service);
 }
+
+std::string Vehicle::get_make() { return this->make; }
 
 Payment::Payment() {
   std::cout << "By what method do you want to pay? ";
@@ -92,24 +104,55 @@ void Customer::add_service(size_t vehicle_idx) {
   }
 }
 
+std::string Customer::get_name() { return this->name; }
+
+std::vector<Vehicle> Customer::get_vehicle_list() { return this->vehicle_list; }
+
 int main() {
   // Creating master record of customers.
   std::vector<Customer> customer_record{};
 
-  std::cout << "Hello customer! What is your name? ";
+  size_t customer_idx{};
+  size_t vehicle_idx{};
+  size_t service_idx{};
   std::string usr_input{};
+
+  std::cout << "Hello customer! What is your name? ";
   GetInput(usr_input);
 
-  while (usr_input.compare("exit")) {
+  while (0 != usr_input.compare(kExit)) {
     Customer new_customer{usr_input};
     customer_record.push_back(new_customer);
 
-    customer_record.at(0).add_vehicle();
-    customer_record.at(0).add_service(0);
+    while (0 != usr_input.compare(kExit)) {
+      customer_record.at(customer_idx).add_vehicle();
 
-    std::cout << "If you want to exit type \"exit\": ";
+      while (0 != usr_input.compare(kExit)) {
+        customer_record.at(customer_idx).add_service(vehicle_idx);
+
+        service_idx++;
+        std::cout << "Enter a new service for "
+                  << customer_record.at(customer_idx).get_name() << "'s "
+                  << customer_record.at(customer_idx)
+                         .get_vehicle_list()
+                         .at(vehicle_idx)
+                         .get_make()
+                  << " (or type \"exit\" to exit): ";
+        GetInput(usr_input);
+      }
+
+      vehicle_idx++;
+      std::cout << "Enter a new vehicle for "
+                << customer_record.at(customer_idx).get_name()
+                << " (or type \"exit\" to exit): ";
+      GetInput(usr_input);
+    }
+
+    customer_idx++;
+    std::cout << "Enter a new customer's name (or type \"exit\" to exit): ";
     GetInput(usr_input);
   }
 
+  PrintCustomerRecord();
   std::cout << "Exiting auto shop. All is forgotten.\n";
 }
