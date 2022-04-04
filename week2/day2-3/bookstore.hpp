@@ -17,6 +17,13 @@ const int kEdit{5};
 const int kDelete{6};
 const int kExit{7};
 
+const int kAuthor{1};
+const int kTitle{2};
+const int kPublisher{3};
+const int kYear{4};
+const int kPrice{5};
+const int kCurrentStock{6};
+
 class Book {
  public:
   Book();
@@ -33,6 +40,7 @@ class Book {
   void SetYear(int&);
   void SetPrice(int&);
   void SetCurrentStock(int&);
+  void AdjustCurrentStock(int);
 
  private:
   std::string author{};
