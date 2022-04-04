@@ -22,78 +22,123 @@
  * 5. Exit
  */
 
+#include "bookstore.hpp"
+
 #include <iostream>
+#include <vector>
 
-enum class Menu {
-  kNew = 0,
-  kList,
-  kSearch,
-  kBuy,
-  kEdit,
-  kExit,
-};
+Book::Book() {
+  std::string in_string{};
 
-class Book {
- public:
-  std::string GetAuthor();
-  std::string GetTitle();
-  std::string GetPublisher();
-  int GetYear();
-  int GetPrice();
-  int GetCurrentStock();
-  void SetAuthor(std::string);
-  void SetTitle(std::string);
-  void SetPublisher(std::string);
-  void SetYear(int);
-  void SetPrice(int);
-  void SetCurrentStock(int);
+  std::cout << "Enter book author: ";
+  std::cin >> std::ws;
+  std::getline(std::cin, in_string, '\n');
+  this->author;
 
- private:
-  std::string author{};
-  std::string title{};
-  std::string publisher{};
-  int year{};
-  int price{};
-  int current_stock{};
-};
+  std::cout << "Enter book title: ";
+  std::cin >> std::ws;
+  std::getline(std::cin, in_string, '\n');
+  this->title;
+
+  std::cout << "Enter book publisher: ";
+  std::cin >> std::ws;
+  std::getline(std::cin, in_string, '\n');
+  this->publisher;
+
+  int in_int{};
+
+  std::cout << "Enter publishing year: ";
+  std::cin >> in_int;
+  this->year;
+
+  std::cout << "Enter retail price: ";
+  std::cin >> in_int;
+  this->price;
+
+  std::cout << "Enter initial stock: ";
+  std::cin >> in_int;
+  this->current_stock;
+}
+
+Book::~Book() {}
 
 std::string Book::GetAuthor() { return this->author; }
-
 std::string Book::GetTitle() { return this->title; }
-
 std::string Book::GetPublisher() { return this->publisher; }
-
 int Book::GetYear() { return this->year; }
-
 int Book::GetPrice() { return this->price; }
-
 int Book::GetCurrentStock() { return this->current_stock; }
+void Book::SetAuthor(std::string &in) { this->author = in; }
+void Book::SetTitle(std::string &in) { this->title = in; }
+void Book::SetPublisher(std::string &in) { this->publisher = in; }
+void Book::SetYear(int &in) { this->year = in; }
+void Book::SetPrice(int &in) { this->price = in; }
+void Book::SetCurrentStock(int &in) { this->current_stock = in; }
 
-void Book::SetAuthor(std::string in) { this->author = in; }
-
-void Book::SetTitle(std::string in) { this->title = in; }
-
-void Book::SetPublisher(std::string in) { this->publisher = in; }
-
-void Book::SetYear(int in) { this->year = in; }
-
-void Book::SetPrice(int in) { this->price = in; }
-
-void Book::SetCurrentStock(int in) { this->current_stock = in; }
-
-void PrintMenu(int &choice) {
+void PrintMenu() {
   std::cout << " ~~ Menu ~~\n"
             << "1) Enter new book\n"
             << "2) List books\n"
             << "3) Search books\n"
             << "4) By a book\n"
             << "5) Edit existing book\n"
-            << "6) Exit\n"
+            << "5) Delete existing book\n"
+            << "7) Exit\n"
             << " ~~ Choose: ";
-  std::cin >> choice;
 }
 
 int main() {
-  int user_input{};
-  PrintMenu(user_input);
+  std::vector<Book> inventory{};
+
+  int menu_input{};
+  PrintMenu();
+  std::cin >> menu_input;
+
+  switch (menu_input) {
+    case kNew: {
+      Book b{};
+      inventory.push_back(b);
+      break;
+    }
+    case kList: {
+      if (inventory.size() > 0) {
+        for (auto book : inventory) {
+          std::cout << "Author:\t" << book.GetAuthor() << "\n"
+                    << "Title:\t" << book.GetTitle() << "\n"
+                    << "Publicher:\t" << book.GetPublisher() << "\n"
+                    << "Publ. year:\t" << book.GetYear() << "\n"
+                    << "Price:\t" << book.GetPrice() << "\n"
+                    << "Curr. stock:\t" << book.GetCurrentStock() << "\n";
+        }
+      } else {
+        std::cout << "Inventory empty. Nothing to list.\n";
+      }
+      break;
+    }
+    case kSearch: {
+      std::cout << "Search\n";
+      break;
+    }
+    case kBuy: {
+      std::cout << "Buy\n";
+      break;
+    }
+    case kEdit: {
+      std::cout << "Edit\n";
+      break;
+    }
+    case kDelete: {
+      if (inventory.size() > 0) {
+        std::cout << "Deleting last entry.\n";
+        inventory.pop_back();
+      } else {
+        std::cout << "Inventory empty. Nothing to delete.\n";
+      }
+      break;
+    }
+    case kExit: {
+      std::cout << "Exit\n";
+      break;
+    }
+  }
 }
