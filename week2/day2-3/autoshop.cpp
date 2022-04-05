@@ -1,6 +1,7 @@
 #include "autoshop.hpp"
 
 #include <sstream>
+#include <cassert>
 
 void GetInput(std::string &s) {
   std::cin >> std::ws;
@@ -103,19 +104,21 @@ void Vehicle::add_service() {
   GetInput(parts_changed);
 
   while (0 != parts_changed.compare("no")) {
-    if (parts_changed.compare("yes")) {
+    if (0 != parts_changed.compare("yes")) {
       std::cout << "Please enter \"yes\" or \"no\": ";
       GetInput(parts_changed);
       continue;
     }
 
     new_service.add_part();
+    assert(!new_service.get_parts().empty());
 
     std::cout << "Did you change any other parts (yes/no)? ";
     GetInput(parts_changed);
   }
 
   this->service_list.push_back(new_service);
+  assert(!this->service_list.empty());
 }
 
 std::string Vehicle::get_make() { return this->make; }
@@ -196,6 +199,7 @@ int main() {
 
     while (0 != usr_input.compare(kExit)) {
       customer_record.at(customer_idx).add_vehicle();
+      assert(!customer_record.at(customer_idx).get_vehicle_list().empty());
 
       while (0 != usr_input.compare(kExit)) {
         customer_record.at(customer_idx).add_service(vehicle_idx);
