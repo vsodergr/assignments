@@ -37,3 +37,6 @@
 # Config and output folders
 .vscode/
 build/
+
+# Special cases
+!libshapes.so

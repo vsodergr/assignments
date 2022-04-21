@@ -7,7 +7,7 @@
 #include <iostream>
 
 template <typename Ta, typename Tb>
-void compare_shapes(Ta const& a, Tb const& b) {
+void compare_shapes(const Ta& a, const Tb& b) {
   if (a.area() > b.area()) {
     std::cout << "First shape has greater area.\n";
   } else if (a.area() < b.area()) {
