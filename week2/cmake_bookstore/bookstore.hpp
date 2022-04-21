@@ -15,6 +15,9 @@ const int kYear{4};
 const int kPrice{5};
 const int kCurrentStock{6};
 
+// Helper function to capture int input from user
+void IntInput(int&);
+
 class Book {
  public:
   Book();

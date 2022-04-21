@@ -2,6 +2,16 @@
 
 #include <iostream>
 
+void IntInput(int& in_int) {
+  std::cin >> in_int;
+  while(std::cin.fail()) {
+    std::cout << "Input must be an integer. Try again.\n";
+    std::cin.clear();
+    std::cin.ignore(256, '\n');
+    std::cin >> in_int;
+  }
+}
+
 Book::Book() {
   std::string in_string{};
 
@@ -23,15 +33,15 @@ Book::Book() {
   int in_int{};
 
   std::cout << "Enter publishing year: ";
-  std::cin >> in_int;
+  IntInput(in_int);
   this->year = in_int;
 
   std::cout << "Enter retail price: ";
-  std::cin >> in_int;
+  IntInput(in_int);
   this->price = in_int;
 
   std::cout << "Enter initial stock: ";
-  std::cin >> in_int;
+  IntInput(in_int);
   this->current_stock = in_int;
 }
 

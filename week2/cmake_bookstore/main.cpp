@@ -72,7 +72,7 @@ int main() {
   while (running) {
     int menu_input{};
     PrintMenu();
-    std::cin >> menu_input;
+    IntInput(menu_input);
 
     switch (menu_input) {
       case kNew: {
@@ -136,14 +136,14 @@ int main() {
                       << "    1) Yes please.\n"
                       << "    2) No! Keep searching.\n"
                       << " ~~ User confirmation: ";
-            std::cin >> confirmation;
+            IntInput(confirmation);
 
             if (1 == confirmation) {
               int amount{};
 
               std::cout << "\n"
                         << " ~~ How many copies do you want to buy? ";
-              std::cin >> amount;
+              IntInput(amount);
               if (book.GetCurrentStock() - amount >= 0) {
                 book.AdjustCurrentStock(-amount);
                 std::cout << "\nYou are buying " << amount << " copies of \""
@@ -189,7 +189,7 @@ int main() {
                       << "    1) Yes.\n"
                       << "    2) No!\n"
                       << " ~~ User confirmation: ";
-            std::cin >> confirmation;
+            IntInput(confirmation);
 
             if (1 == confirmation) {
               int field_edit_choice{};
@@ -203,7 +203,7 @@ int main() {
                           << "    6) Current Stock\n"
                           << "    7) Stop editing. Return to main menu.\n"
                           << " ~~ Field to edit: ";
-                std::cin >> field_edit_choice;
+                IntInput(field_edit_choice);
 
                 std::string edit_str{};
                 int edit_int{};
@@ -232,19 +232,19 @@ int main() {
                   case kYear:
                     std::cout << "\n"
                               << " ~~ Enter year: ";
-                    std::cin >> edit_int;
+                    IntInput(edit_int);
                     inventory.at(i).SetYear(edit_int);
                     break;
                   case kPrice:
                     std::cout << "\n"
                               << " ~~ Enter price: ";
-                    std::cin >> edit_int;
+                    IntInput(edit_int);
                     inventory.at(i).SetPrice(edit_int);
                     break;
                   case kCurrentStock:
                     std::cout << "\n"
                               << " ~~ Enter current stock: ";
-                    std::cin >> edit_int;
+                    IntInput(edit_int);
                     inventory.at(i).SetCurrentStock(edit_int);
                     break;
                   default:
@@ -285,7 +285,7 @@ int main() {
                       << "    1) Yes.\n"
                       << "    2) No!\n"
                       << " ~~ User confirmation: ";
-            std::cin >> confirmation;
+            IntInput(confirmation);
 
             if (1 == confirmation) {
               std::cout << "\nDeleted \"" << inventory.at(i).GetTitle()
@@ -309,7 +309,7 @@ int main() {
                   << "    1) Yes! Exit the book store.\n"
                   << "    2) No! Back to the menu.\n"
                   << " ~~ User confirmation: ";
-        std::cin >> confirmation;
+        IntInput(confirmation);
 
         if (1 == confirmation) running = false;
         break;
