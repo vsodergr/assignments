@@ -1,3 +1,6 @@
+#ifndef BOOKSTORE_HPP
+#define BOOKSTORE_HPP
+
 #include <string>
 
 const int kNew{1};
@@ -44,3 +47,5 @@ class Book {
   int price{};
   int current_stock{};
 };
+
+#endif /* BOOKSTORE_HPP */
